@@ -1,36 +1,42 @@
 // src/pages/Loyalty.jsx
 import React, { useEffect, useState } from 'react';
+import { eventBus } from '@/utils/eventBus';
 
 export default function Loyalty() {
-  const [loyaltyData, setLoyaltyData] = useState(null);
+  const [totalPoints, setTotalPoints] = useState(0);
+  const [redeemedPoints, setRedeemedPoints] = useState(0);
+  const [tierProgress, setTierProgress] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  // Load from localStorage on first mount
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setLoyaltyData({
-        totalPoints: 5000,
-        redeemedPoints: 2500,
-        tierProgress: 50,
-        benefits: [
-          'Priority customer support',
-          '1.5x points on bookings',
-          'Free seat selection',
-        ],
+    const points = parseInt(localStorage.getItem("loyaltyPoints") || "0");
+    setTotalPoints(points);
+    setRedeemedPoints(0);
+    setTierProgress(Math.min((points / 10000) * 100, 100)); // Adjust as needed
+    setLoading(false);
+  }, []);
+
+  // Update on loyalty.award event
+  useEffect(() => {
+    const handleLoyaltyAward = ({ email, points }) => {
+      setTotalPoints((prev) => {
+        const newTotal = prev + points;
+        localStorage.setItem("loyaltyPoints", newTotal.toString());
+        setTierProgress(Math.min((newTotal / 10000) * 100, 100));
+        return newTotal;
       });
-      setLoading(false);
-    }, 1500);
+    };
+
+    eventBus.on("loyalty.award", handleLoyaltyAward);
+    return () => eventBus.off("loyalty.award", handleLoyaltyAward);
   }, []);
 
   if (loading) {
-    return (
-      <div className="p-8 text-center text-gray-500">
-        Loading loyalty data...
-      </div>
-    );
+    return <div className="p-8 text-center text-gray-500">Loading loyalty data...</div>;
   }
 
-  const available = loyaltyData.totalPoints - loyaltyData.redeemedPoints;
+  const available = totalPoints - redeemedPoints;
 
   return (
     <div className="p-8 space-y-6">
@@ -41,7 +47,9 @@ export default function Loyalty() {
         <div className="bg-white shadow p-5 rounded-lg border">
           <p className="text-gray-500">Available Points</p>
           <h2 className="text-3xl font-bold text-blue-600">{available}</h2>
-          <p className="text-sm text-gray-400 mt-2">Total: {loyaltyData.totalPoints} | Redeemed: {loyaltyData.redeemedPoints}</p>
+          <p className="text-sm text-gray-400 mt-2">
+            Total: {totalPoints} | Redeemed: {redeemedPoints}
+          </p>
         </div>
 
         {/* Value Card */}
@@ -59,11 +67,11 @@ export default function Loyalty() {
           <div className="w-full bg-gray-200 h-2 rounded-full mb-1">
             <div
               className="bg-blue-500 h-2 rounded-full transition-all duration-700"
-              style={{ width: `${loyaltyData.tierProgress}%` }}
+              style={{ width: `${tierProgress}%` }}
             ></div>
           </div>
           <p className="text-sm text-gray-600">
-            {loyaltyData.tierProgress}% to next tier
+            {tierProgress.toFixed(1)}% to next tier
           </p>
         </div>
       </div>
@@ -72,9 +80,9 @@ export default function Loyalty() {
       <div className="bg-white shadow p-5 rounded-lg border mt-6">
         <h2 className="text-lg font-semibold text-gray-800 mb-2">Tier Benefits</h2>
         <ul className="list-disc pl-5 text-gray-600 space-y-1">
-          {loyaltyData.benefits.map((benefit, idx) => (
-            <li key={idx}>{benefit}</li>
-          ))}
+          <li>Priority customer support</li>
+          <li>1.5x points on bookings</li>
+          <li>Free seat selection</li>
         </ul>
       </div>
     </div>

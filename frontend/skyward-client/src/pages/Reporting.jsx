@@ -1,4 +1,3 @@
-// src/pages/Reporting.jsx
 import React, { useEffect, useState } from 'react';
 import { Line, Doughnut } from 'react-chartjs-2';
 import {
@@ -11,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { eventBus } from '@/utils/eventBus'; // make sure eventBus import
 
 ChartJS.register(
   CategoryScale,
@@ -22,30 +22,69 @@ ChartJS.register(
   Legend
 );
 
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function getTodayIndex() {
+  return new Date().getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+}
+
+function initEmptyWeeklyData() {
+  return Array(7).fill(0);
+}
+
+function loadWeeklyData(key) {
+  const stored = localStorage.getItem(key);
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length === 7) return parsed;
+    } catch {}
+  }
+  return initEmptyWeeklyData();
+}
+
+function saveWeeklyData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
 export default function Reporting() {
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState(null);
 
+  // Load stats and weekly booking/payment arrays from localStorage
+  const loadStats = () => {
+    const bookings = parseInt(localStorage.getItem('totalBookings') || '0');
+    const payments = parseInt(localStorage.getItem('totalPayments') || '0');
+    const loyaltyPoints = parseInt(localStorage.getItem('loyaltyPoints') || '0');
+
+    // Load weekly booking/payment arrays (7 days)
+    const weeklyBookings = loadWeeklyData('weeklyBookings');
+    const weeklyPayments = loadWeeklyData('weeklyPayments');
+
+    setStats({
+      bookings,
+      payments,
+      loyaltyPoints,
+      chartData: {
+        labels: DAYS,
+        bookings: weeklyBookings,
+        payments: weeklyPayments,
+      },
+      tierDistribution: {
+        Gold: 15,
+        Silver: 45,
+        Bronze: 40,
+      },
+    });
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    // Simulated API call
-    setTimeout(() => {
-      setStats({
-        bookings: 128,
-        payments: 124,
-        loyaltyPoints: 9820,
-        chartData: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          bookings: [12, 19, 10, 22, 15, 30, 20],
-          payments: [10, 17, 8, 19, 12, 28, 18],
-        },
-        tierDistribution: {
-          Gold: 15,
-          Silver: 45,
-          Bronze: 40,
-        },
-      });
-      setLoading(false);
-    }, 1500);
+    loadStats();
+
+    eventBus.on('reporting.update', loadStats);
+    return () => eventBus.off('reporting.update', loadStats);
   }, []);
 
   if (loading) {

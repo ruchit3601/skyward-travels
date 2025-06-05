@@ -1,28 +1,32 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 const tabs = [
-  { label: 'Architecture', path: '/architecture' },
-  { label: 'Booking Flow', path: '/booking-flow' },
-  { label: 'Loyalty', path: '/loyalty' },
-  { label: 'Notifications', path: '/notifications' },
-  { label: 'Reports', path: '/reports' },
-  { label: 'Journey Map', path: '/journey-map' }
-]
+  { path: "/architecture", label: "Architecture" },
+  { path: "/booking-flow", label: "Booking Flow" },
+  { path: "/loyalty", label: "Loyalty" },
+  { path: "/notifications", label: "Notifications" },
+  { path: "/reporting", label: "Reporting" },
+  { path: "/journey-map", label: "Journey Map" },
+];
 
 export default function TabBar() {
   return (
-    <div className="flex justify-center gap-1 mb-6">
-      {tabs.map(tab => (
+    <nav className="flex flex-wrap justify-center gap-3 text-sm sm:text-base">
+      {tabs.map((tab) => (
         <NavLink
           key={tab.path}
           to={tab.path}
           className={({ isActive }) =>
-            `px-4 py-2 border rounded-md text-sm font-medium ${isActive ? 'bg-white border-gray-300 shadow' : 'bg-gray-100 text-gray-600'}`
+            `px-4 py-2 rounded-full font-medium transition ${
+              isActive
+                ? "bg-indigo-600 text-white shadow"
+                : "bg-gray-200 text-gray-800 hover:bg-indigo-100"
+            }`
           }
         >
           {tab.label}
         </NavLink>
       ))}
-    </div>
-  )
+    </nav>
+  );
 }

@@ -12,7 +12,7 @@ export default function Architecture() {
   return (
     <div className="flex flex-col w-full h-full min-h-full overflow-auto">
       {/* Services grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+      <div className="grid grid-cols-1 text-black sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
         {services.map((s, idx) => (
           <ServiceCard key={idx} {...s} />
         ))}
@@ -20,8 +20,8 @@ export default function Architecture() {
 
       {/* Overview card */}
       <div className="bg-white shadow rounded-lg p-6 flex-shrink-0">
-        <h2 className="text-lg font-semibold mb-2">📑 Microservices Architecture Overview</h2>
-        <p className="text-gray-600 mb-4">
+        <h2 className="text-lg text-black font-semibold mb-2">📑 Microservices Architecture Overview</h2>
+        <p className="mb-4 text-black ">
           Skyward Travels uses a distributed microservices architecture where each service is responsible for a specific business domain and communicates through well-defined APIs.
         </p>
         <div className="grid grid-cols-3 gap-4 text-center">
