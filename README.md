@@ -68,11 +68,11 @@ cd skyward-travels-booking
 npm install
 npm run dev
 
-## Screenshots
+# Screenshots
 
 ### Booking Flow Screenshot
 <img src="https://github.com/ruchit3601/skyward-travels/blob/main/image1.png" />
-<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image2.png" />
+<img src="[https://github.com/ruchit3601/skyward-travels/blob/main/image2.png](https://github.com/ruchit3601/skyward-travels/blob/main/image2.png)" />
 <img src="https://github.com/ruchit3601/skyward-travels/blob/main/image3.png" />
 <img src="https://github.com/ruchit3601/skyward-travels/blob/main/image4.png" />
 <img src="https://github.com/ruchit3601/skyward-travels/blob/main/image5.png" />
