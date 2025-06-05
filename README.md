@@ -71,7 +71,7 @@ npm run dev
 ## Screenshots
 
 ### Booking Flow Screenshot
-<img src="./images/image1.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image1.png" />
 <img src="./images/image2.png" />
 <img src="./images/image3.png" />
 <img src="./images/image4.png" />
