@@ -72,11 +72,11 @@ npm run dev
 
 ### Booking Flow Screenshot
 <img src="https://github.com/ruchit3601/skyward-travels/blob/main/image1.png" />
-<img src="./images/image2.png" />
-<img src="./images/image3.png" />
-<img src="./images/image4.png" />
-<img src="./images/image5.png" />
-<img src="./images/image6.png" />
-<img src="./images/image7.png" />
-<img src="./images/image8.png" />
-<img src="./images/image9.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image2.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image3.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image4.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image5.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image6.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image7.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image8.png" />
+<img src="https://github.com/ruchit3601/skyward-travels/blob/main/image9.png" />
