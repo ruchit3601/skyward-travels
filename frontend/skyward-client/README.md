@@ -2,14 +2,22 @@
 
 This React + Vite project implements a dynamic trip booking flow featuring:
 
-- Trip selection with animated image carousel
-- User details form with validation
-- Payment details input with card type selection
-- Loyalty points system with earning and redemption (100 points = $1)
-- Smooth UI with Tailwind CSS and animated toggle switches
-- Local storage simulation for booking statistics and loyalty points
-- Event-based architecture via custom eventBus for extensibility
+✨ Features
+🖼️ Trip selection with animated image carousel
 
+📅 Departure date selection
+
+💳 Professional payment form (Visa/MasterCard/Credit) with validation
+
+🎁 Loyalty points redemption toggle (100 points = $1 discount)
+
+🔐 Input validation for all booking and payment fields
+
+🪄 Smooth transitions and responsive UI with Tailwind CSS
+
+📦 EventBus integration for microservice simulation
+
+📈 Local storage stats tracking for analytics simulation
 ---
 
 ## Tech Stack
@@ -72,4 +80,3 @@ npm run dev
 <img src="./images/image7.png" />
 <img src="./images/image8.png" />
 <img src="./images/image9.png" />
-/images/image1.png
